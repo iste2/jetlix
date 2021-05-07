@@ -13,15 +13,34 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.x
+        
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build
       run: dotnet build --no-restore
+      
     #- name: Test
     #  run: dotnet test --no-build --verbosity normal
+    
     - name: Publish
       run: dotnet publish
+      
+    - name: Build Artifact ApiServer
+      uses: actions/upload-artifact@v2
+      with:
+        name: Jetlix.ApiServer
+        path: /home/runner/work/jetlix/jetlix/Jetlix.ApiServer/bin/Debug/netcoreapp3.1/publish/
+    
+    - name: Build Artifact WebCrawler
+      uses: actions/upload-artifact@v2
+      with:
+        name: Jetlix.WebCrawler
+        path: /home/runner/work/jetlix/jetlix/Jetlix.WebCrawler/bin/Debug/netcoreapp3.1/publish/
+        
+    
